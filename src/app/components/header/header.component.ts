@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -9,24 +9,18 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class HeaderComponent {
 
-  searchForm: FormGroup
+  searchForm: FormGroup;
+  @Output() nombreEmitido: EventEmitter<string>
 
   constructor(private usersService: UsersService) {
+    this.nombreEmitido = new EventEmitter
     this.searchForm = new FormGroup({
       name: new FormControl('', null)
     }, [])
   }
 
-  async getData(): Promise<void> {
-    try {
-      let name = this.searchForm.value.name;
-      let response = await this.usersService.getUsersByName(name)
-      console.log(response)
-    } catch (error) {
-      console.log(error);
-
-
-    }
+  getData(): void {
+    this.nombreEmitido.emit(this.searchForm.value.name)
   }
 
 }

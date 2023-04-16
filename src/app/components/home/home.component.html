@@ -1,6 +1,15 @@
 <header class="bg-dark p-3 text-white shadow">
-    <app-header></app-header>
+    <app-header (nombreEmitido)="getUsers($event)"></app-header>
 </header>
 <main>
-    <p>Contenido</p>
+    <section class="container mt-3">
+        <h1>Listado de usuarios</h1>
+        <hr>
+        <ul *ngIf="arrUsers.length !== 0">
+            <li [routerLink]="['/user', user.login]" *ngFor="let user of arrUsers">{{user.login}} - {{user.id}}</li>
+        </ul>
+        <p *ngIf="arrUsers.length === 0">
+            No hay resultados de busqueda
+        </p>
+    </section>
 </main>

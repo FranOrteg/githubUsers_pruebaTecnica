@@ -15,4 +15,10 @@ export class UsersService {
     return firstValueFrom(
       this.httpClient.get<any>(`${this.baseUrl}search/users?q=${pName}`))
   }
+
+  getUserByLogin(pLogin: string): Promise<any> {
+    return firstValueFrom(
+      this.httpClient.get<any>(`${this.baseUrl}users/${pLogin}`)
+    )
+  }
 }
