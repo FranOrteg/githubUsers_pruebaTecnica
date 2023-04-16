@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -15,8 +15,20 @@ export class HeaderComponent {
   constructor(private usersService: UsersService) {
     this.nombreEmitido = new EventEmitter
     this.searchForm = new FormGroup({
-      name: new FormControl('', null)
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        this.miValidador
+      ])
     }, [])
+  }
+
+  miValidador(control: AbstractControl) {
+    if (control.value === 'mariogiron') {
+      return { 'miValidador': true }
+    };
+    return null
+
   }
 
   getData(): void {
